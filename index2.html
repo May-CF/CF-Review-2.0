@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hello | AR 2.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --surface: #000000;
+    --card: #202429;
+    --border: #2e3338;
+    --sans: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--surface);
+    color: #ffffff;
+    font-family: var(--sans);
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 28px; padding: 88px 24px 24px;
+  }
+  img { image-rendering: pixelated; }
+
+  /* ---------- Header (identical on every page) ---------- */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 30;
+    background: var(--card); border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .site-header img.logo { height: 36px; width: auto; image-rendering: auto; display: block; }
+  .site-title {
+    font-family: var(--sans); font-weight: 600; font-size: 15px;
+    letter-spacing: .08em; color: #ffffff; white-space: nowrap;
+  }
+
+  /* Small loading line on top */
+  .loading-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .loading {
+    font-family: var(--sans); font-weight: 500;
+    font-size: 20px; color: #e5e7e9; letter-spacing: .06em; line-height: 1.3;
+  }
+  .dots span { opacity: 0; animation: dot 1.4s steps(1) infinite; }
+  .dots span:nth-child(2) { animation-delay: .25s; }
+  .dots span:nth-child(3) { animation-delay: .5s; }
+  @keyframes dot { 0% {opacity:0} 20% {opacity:1} 80% {opacity:1} 100% {opacity:0} }
+
+
+  /* Name card: one column, rows stacked */
+  .name-card {
+    width: min(380px, 100%);
+    background: var(--card);
+    border: 3px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 0 0 3px #000, 0 0 0 5px var(--border);
+    overflow: hidden;
+  }
+  .card-title {
+    font-family: var(--sans); font-weight: 600;
+    font-size: 16px; letter-spacing: .12em; color: #e5e7e9;
+    background: var(--card); border-bottom: 2px solid var(--border);
+    padding: 12px 16px; text-align: center;
+  }
+  .row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 18px;
+    border-top: 2px solid var(--border);
+    background-blend-mode: screen;
+  }
+  .card-title + .row { border-top: none; }
+  .row .icon {
+    flex: none; width: 56px; height: 56px;
+    background: #000; border: 2px solid var(--border); border-radius: 4px;
+    display: grid; place-items: center; overflow: hidden;
+  }
+  .row::before{background-color: #000;}
+  .row .icon img { width: 100%; height: 100%; object-fit: contain; background-color: #000;}
+  .row .icon.small img { width: 40px; height: 40px; }
+  .row .text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .label { font-family: var(--sans); font-weight: 600; font-size: 11px; color: #ffffff; letter-spacing: .14em; }
+  .value { font-family: var(--sans); font-weight: 500; font-size: 22px; color: #ffffff; line-height: 1.2; }
+
+  /* Start button */
+  .start {
+    font-family: var(--sans); font-weight: 600;
+    font-size: 16px; padding: 14px 56px; letter-spacing: .14em;
+    background: var(--card); color: #e5e7e9;
+    border: 2px solid #e5e7e9; box-shadow: 0 5px 0 #2e3338;
+    cursor: pointer; opacity: .35; pointer-events: none;
+    transition: transform .08s, box-shadow .08s, background .15s;
+    animation: ready .1s 0.5s forwards;
+  }
+  @keyframes ready { to { opacity: 1; pointer-events: auto; } }
+  .start:hover { background: #000; }
+  .start:active { transform: translateY(4px); box-shadow: 0 1px 0 #2e3338; }
+
+  /* ---------- Phone ---------- */
+  @media (max-width: 720px) {
+    .site-header { padding: 0 16px; }
+    .header-left { gap: 10px; }
+    .site-header img.logo { height: 28px; }
+    .site-title { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-left">
+      <img class="logo" src="logo.png">
+    </div>
+    <span class="site-title">Annual Review 2.0</span>
+  </header>
+
+  <div class="loading-wrap">
+    <div class="loading">Loading screen<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+  </div>
+
+  <div class="name-card">
+    <div class="card-title">Employee Card</div>
+
+    <div class="row">
+      <div class="icon"><img src="MJ_black.png"></div>
+      <div class="text"><span class="label">PLAYER</span><span class="value">Maria</span></div>
+    </div>
+
+    <div class="row">
+      <div class="icon small"><img src="Dwarf_Gadget.png"></div>
+      <div class="text"><span class="label">TEAM</span><span class="value">Operations</span></div>
+    </div>
+
+    <div class="row">
+      <div class="icon small"><img src="Combat_Skill_Icon.png"></div>
+        <div class="text"><span class="label">ROLE</span><span class="value">Ops Manager</span></div>
+    </div>
+
+  </div>
+
+  <button class="start" onclick="window.location.href='agenda.html'">Start</button>
+
+</body>
+</html>
